@@ -16,18 +16,26 @@ public class Solution {
     public static void main(String[] args) throws DownloadException, IOException
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String filename = reader.readLine();
-        FileInputStream inputStream = new FileInputStream(filename);
-        int count = 0;
-        byte[] buffer = new byte[inputStream.available()];
-        if(inputStream.available() > 0)
+        String filename;
+        FileInputStream inputStream;
+
+        while (true)
         {
-            count = inputStream.read(buffer);
+            filename = reader.readLine();
+            inputStream = new FileInputStream(filename);
+            int count;
+            byte[] buffer = new byte[inputStream.available()];
+
+            if (buffer.length < 1000)
+            {
+                inputStream.close();
+                reader.close();
+                throw new DownloadException();
+            }
+            inputStream.close();
         }
-        if (count<=1000)
-        {
-            throw new DownloadException();
-        }
+
+
     }
 
     public static class DownloadException extends Exception{
